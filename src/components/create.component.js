@@ -30,6 +30,7 @@ async function submitHandler(event){
         await apiService.createPost(formData)
 
         this.form.clear()
+        alert('Запись создана в БД')
     }
 
 }
