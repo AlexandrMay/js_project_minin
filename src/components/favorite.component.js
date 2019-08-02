@@ -26,6 +26,7 @@ export class FavoriteComponent extends Component{
 function renderList(list = []){
     if(list && list.length){
         return `
+        
         <ul>
             ${list.map(i=> `<li><a href="#" class="js-link" data-id="${i.id}">${i.title}</a></li>`).join(' ')}
         </ul>
@@ -45,8 +46,14 @@ async function linkClickHandler(event){
         const post = await apiService.fetchPostById(postId)
         this.loader.hide()
         this.$el.insertAdjacentHTML('afterbegin', renderPost(post, {withButton: false}))
-
-    }
-
+        this.$el.insertAdjacentHTML('afterbegin', `<button type="reset" class="btn-link">Назад</button>`)}
+    else if(event.target.classList.contains('btn-link')){
+        this.$el.innerHTML = ''
+        const favorites = JSON.parse(localStorage.getItem('favorites'))
+        const html = renderList(favorites)
+        this.$el.insertAdjacentHTML('afterbegin', html)
 }
+}
+
+
 
